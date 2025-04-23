@@ -16,6 +16,17 @@ services:
     networks:
       - laravel-network
 
+  queue-worker:
+    image: laravel-app
+    container_name: laravel-queue-worker
+    restart: unless-stopped
+    working_dir: /var/www/
+    command: php artisan queue:work
+    volumes:
+      - ./:/var/www
+    networks:
+      - laravel-network
+
   nginx:
     image: nginx:alpine
     container_name: laravel-nginx
@@ -40,6 +51,16 @@ services:
       POSTGRES_PASSWORD: ${DB_PASSWORD}
     volumes:
       - postgres-data:/var/lib/postgresql/data
+    networks:
+      - laravel-network
+
+  mailpit:
+    image: axllent/mailpit:latest
+    container_name: laravel-mailpit
+    restart: unless-stopped
+    ports:
+      - 1025:1025
+      - 8025:8025
     networks:
       - laravel-network
 

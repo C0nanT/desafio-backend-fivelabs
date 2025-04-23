@@ -4,6 +4,8 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Models\Task;
+use App\Models\User;
+use App\Notifications\TaskAssigned;
 use Illuminate\Http\Request;
 
 class TaskController extends Controller
@@ -67,7 +69,14 @@ class TaskController extends Controller
             'priority' => $request->priority ?? 'medium',
             'responsible' => $request->responsible,
             'created_by' => auth()->id()
-        ]);
+        ]); 
+
+        if ($task->responsible) {
+            $responsibleUser = User::find($task->responsible);
+            if ($responsibleUser) {
+                $responsibleUser->notify(new TaskAssigned($task));
+            }
+        }
 
         return response()->json([
             'message' => 'Task created successfully',
