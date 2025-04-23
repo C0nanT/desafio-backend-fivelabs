@@ -2,7 +2,7 @@
 
 namespace Database\Seeders;
 
-use App\Models\Task;
+use App\Models\Tasks;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 use Carbon\Carbon;
@@ -107,6 +107,6 @@ class TaskSeeder extends Seeder
             ],
         ];
 
-        Task::insert($tasks);
+        Tasks::insert($tasks);
     }
 }

@@ -2,7 +2,7 @@
 
 namespace App\Notifications;
 
-use App\Models\Task;
+use App\Models\Tasks;
 use App\Models\User;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
@@ -20,7 +20,7 @@ class TaskAssigned extends Notification implements ShouldQueue
     /**
      * Create a new notification instance.
      */
-    public function __construct(Task $task)
+    public function __construct(Tasks $task)
     {
         $this->task = $task;
     }

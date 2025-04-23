@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
-use App\Models\Task;
+use App\Models\Tasks;
 use App\Models\User;
 use App\Notifications\TaskAssigned;
 use Illuminate\Http\Request;
@@ -29,13 +29,13 @@ class TaskController extends Controller
     {
 
         if (auth()->user()->is_admin) {
-            $tasks = Task::all();
+            $tasks = Tasks::all();
             return response()->json([
                 'data' => $tasks
             ]);
         }
 
-        $tasks = Task::where('created_by', auth()->id())
+        $tasks = Tasks::where('created_by', auth()->id())
             ->orWhere('responsible', auth()->id())
             ->get();
 
@@ -45,7 +45,7 @@ class TaskController extends Controller
     }
 
     /**
-     * Store a newly created task in storage.
+     * Store a newly created tasks in storage.
      *
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\JsonResponse
@@ -68,7 +68,7 @@ class TaskController extends Controller
             ], 422);
         }
 
-        $task = Task::create([
+        $task = Tasks::create([
             'title' => $request->title,
             'description' => $request->description,
             'status' => $request->status ?? 'pending',
@@ -86,13 +86,13 @@ class TaskController extends Controller
         }
 
         return response()->json([
-            'message' => 'Task created successfully',
+            'message' => 'Tasks created successfully',
             'data' => $task
         ], 201);
     }
 
     /**
-     * Display the specified task.
+     * Display the specified tasks.
      *
      * @param  int  $id
      * @return \Illuminate\Http\JsonResponse
@@ -100,12 +100,12 @@ class TaskController extends Controller
     public function show($id)
     {
 
-        $task = Task::where('created_by', auth()->id())->find($id)
-            ?? Task::where('responsible', auth()->id())->find($id);
+        $task = Tasks::where('created_by', auth()->id())->find($id)
+            ?? Tasks::where('responsible', auth()->id())->find($id);
 
         if (!$task) {
             return response()->json([
-                'message' => 'Task not found'
+                'message' => 'Tasks not found'
             ], 404);
         }
 
@@ -115,7 +115,7 @@ class TaskController extends Controller
     }
 
     /**
-     * Update the specified task in storage.
+     * Update the specified tasks in storage.
      *
      * @param  \Illuminate\Http\Request  $request
      * @param  int  $id
@@ -133,34 +133,34 @@ class TaskController extends Controller
         ]);
 
         if (auth()->user()->is_admin) {
-            $task = Task::find($id);
+            $task = Tasks::find($id);
         } else {
-            $task = Task::where('responsible', auth()->id())->find($id);
+            $task = Tasks::where('responsible', auth()->id())->find($id);
         }
 
         if (!$task) {
             return response()->json([
-                'message' => 'Task not found'
+                'message' => 'Tasks not found'
             ], 404);
         }
 
         $task->update($request->all());
 
         return response()->json([
-            'message' => 'Task updated successfully',
+            'message' => 'Tasks updated successfully',
             'data' => $task
         ]);
     }
 
     /**
-     * Remove the specified task from storage.
+     * Remove the specified tasks from storage.
      *
      * @param  int  $id
      * @return \Illuminate\Http\JsonResponse
      */
     public function destroy($id)
     {
-        $task = Task::find($id);
+        $task = Tasks::find($id);
 
         if (!auth()->user()->is_admin && $task->responsible != auth()->id()) {
             return response()->json([
@@ -170,14 +170,14 @@ class TaskController extends Controller
 
         if (!$task) {
             return response()->json([
-                'message' => 'Task not found'
+                'message' => 'Tasks not found'
             ], 404);
         }
 
         $task->delete();
 
         return response()->json([
-            'message' => 'Task deleted successfully'
+            'message' => 'Tasks deleted successfully'
         ]);
     }
 }
