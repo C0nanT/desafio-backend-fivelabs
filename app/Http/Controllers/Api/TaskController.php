@@ -124,8 +124,7 @@ class TaskController extends Controller
         if(auth()->user()->is_admin) {
             $task = Task::find($id);
         } else {
-            $task = Task::where('created_by', auth()->id())->find($id)
-                ?? Task::where('responsible', auth()->id())->find($id);
+            $task = Task::where('created_by', auth()->id())->find($id);
         }
         
         if (!$task) {
@@ -141,6 +140,38 @@ class TaskController extends Controller
             'status' => 'success',
             'message' => 'Task updated successfully',
             'data' => $task
+        ]);
+    }
+
+    /**
+     * Remove the specified task from storage.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function destroy($id)
+    {
+        $task = Task::find($id);
+
+        if(!auth()->user()->is_admin && $task->created_by != auth()->id()) {
+            return response()->json([
+                'status' => 'error',
+                'message' => 'Unauthorized'
+            ], 403);
+        };
+        
+        if (!$task) {
+            return response()->json([
+                'status' => 'error',
+                'message' => 'Task not found'
+            ], 404);
+        }
+
+        $task->delete();
+
+        return response()->json([
+            'status' => 'success',
+            'message' => 'Task deleted successfully'
         ]);
     }
 }
