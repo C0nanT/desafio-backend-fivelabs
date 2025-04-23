@@ -1,4 +1,3 @@
-version: '3'
 services:
   app:
     build:
@@ -54,6 +53,17 @@ services:
     networks:
       - laravel-network
 
+  redis:
+    image: redis:alpine
+    container_name: laravel-redis
+    restart: unless-stopped
+    ports:
+      - 6379:6379
+    volumes:
+      - redis-data:/data
+    networks:
+      - laravel-network
+
   mailpit:
     image: axllent/mailpit:latest
     container_name: laravel-mailpit
@@ -70,4 +80,6 @@ networks:
 
 volumes:
   postgres-data:
+    driver: local
+  redis-data:
     driver: local
