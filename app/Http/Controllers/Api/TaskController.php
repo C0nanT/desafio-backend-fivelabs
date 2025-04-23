@@ -29,7 +29,6 @@ class TaskController extends Controller
         if(auth()->user()->is_admin) {
             $tasks = Task::all();
             return response()->json([
-                'status' => 'success',
                 'data' => $tasks
             ]);
         }
@@ -39,7 +38,6 @@ class TaskController extends Controller
                 ->get();
 
         return response()->json([
-            'status' => 'success',
             'data' => $tasks
         ]);
     }
@@ -72,7 +70,6 @@ class TaskController extends Controller
         ]);
 
         return response()->json([
-            'status' => 'success',
             'message' => 'Task created successfully',
             'data' => $task
         ], 201);
@@ -92,13 +89,11 @@ class TaskController extends Controller
         
         if (!$task) {
             return response()->json([
-                'status' => 'error',
                 'message' => 'Task not found'
             ], 404);
         }
 
         return response()->json([
-            'status' => 'success',
             'data' => $task
         ]);
     }
@@ -129,7 +124,6 @@ class TaskController extends Controller
         
         if (!$task) {
             return response()->json([
-                'status' => 'error',
                 'message' => 'Task not found'
             ], 404);
         }
@@ -137,7 +131,6 @@ class TaskController extends Controller
         $task->update($request->all());
 
         return response()->json([
-            'status' => 'success',
             'message' => 'Task updated successfully',
             'data' => $task
         ]);
@@ -155,14 +148,12 @@ class TaskController extends Controller
 
         if(!auth()->user()->is_admin && $task->created_by != auth()->id()) {
             return response()->json([
-                'status' => 'error',
                 'message' => 'Unauthorized'
             ], 403);
         };
         
         if (!$task) {
             return response()->json([
-                'status' => 'error',
                 'message' => 'Task not found'
             ], 404);
         }
@@ -170,7 +161,6 @@ class TaskController extends Controller
         $task->delete();
 
         return response()->json([
-            'status' => 'success',
             'message' => 'Task deleted successfully'
         ]);
     }
