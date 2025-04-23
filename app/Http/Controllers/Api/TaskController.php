@@ -1,0 +1,104 @@
+<?php
+
+namespace App\Http\Controllers\Api;
+
+use App\Http\Controllers\Controller;
+use App\Models\Task;
+use Illuminate\Http\Request;
+
+class TaskController extends Controller
+{
+    /**
+     * Create a new TaskController instance.
+     *
+     * @return void
+     */
+    public function __construct()
+    {
+        $this->middleware('auth:api');
+    }
+
+    /**
+     * Display a listing of the tasks.
+     *
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function index()
+    {
+
+        if(auth()->user()->is_admin) {
+            $tasks = Task::all();
+            return response()->json([
+                'status' => 'success',
+                'data' => $tasks
+            ]);
+        }
+        
+        $tasks = Task::where('created_by', auth()->id())
+                ->orWhere('responsible', auth()->id())
+                ->get();
+
+        return response()->json([
+            'status' => 'success',
+            'data' => $tasks
+        ]);
+    }
+
+    /**
+     * Store a newly created task in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function store(Request $request)
+    {
+        $request->validate([
+            'title' => 'required|string|max:255',
+            'description' => 'nullable|string',
+            'status' => 'nullable|string|in:pending,in_progress,completed',
+            'due_date' => 'nullable|date',
+            'priority' => 'nullable|string|in:low,medium,high',
+            'responsible' => 'nullable|exists:users,id',            
+        ]);
+
+        $task = Task::create([
+            'title' => $request->title,
+            'description' => $request->description,
+            'status' => $request->status ?? 'pending',
+            'due_date' => $request->due_date,
+            'priority' => $request->priority ?? 'medium',
+            'responsible' => $request->responsible,
+            'created_by' => auth()->id()
+        ]);
+
+        return response()->json([
+            'status' => 'success',
+            'message' => 'Task created successfully',
+            'data' => $task
+        ], 201);
+    }
+
+    /**
+     * Display the specified task.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function show($id)
+    {
+
+        $task = Task::where('created_by', auth()->id())->find($id);
+        
+        if (!$task) {
+            return response()->json([
+                'status' => 'error',
+                'message' => 'Task not found'
+            ], 404);
+        }
+
+        return response()->json([
+            'status' => 'success',
+            'data' => $task
+        ]);
+    }
+}

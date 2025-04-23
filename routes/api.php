@@ -3,17 +3,8 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\AuthController;
+use App\Http\Controllers\Api\TaskController;
 
-/*
-|--------------------------------------------------------------------------
-| API Routes
-|--------------------------------------------------------------------------
-|
-| Here is where you can register API routes for your application. These
-| routes are loaded by the RouteServiceProvider and all of them will
-| be assigned to the "api" middleware group. Make something great!
-|
-*/
 
 Route::controller(AuthController::class)->group(function () {
     Route::post('register', 'register');
@@ -22,3 +13,12 @@ Route::controller(AuthController::class)->group(function () {
     Route::delete('logout', 'logout');
     Route::post('refresh', 'refresh');
 });
+
+
+Route::controller(TaskController::class)->group(function () {
+    Route::get('tasks', 'index');
+    Route::post('tasks', 'store');
+    Route::get('tasks/{id}', 'show');
+    Route::put('tasks/{id}', 'update');
+    Route::delete('tasks/{id}', 'destroy');
+})->middleware('auth:api');
