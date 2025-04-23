@@ -22,26 +22,31 @@ class UserSeeder extends Seeder
                 'name' => 'conan1',
                 'email' => 'conan1@5labs.com.br',
                 'password' => Hash::make('123456'),
+                'is_admin' => true,
             ],
             [
                 'name' => 'conan2',
                 'email' => 'conan2@5labs.com.br',
                 'password' => Hash::make('123456'),
+                'is_admin' => false,
             ],
             [
                 'name' => 'conan3',
                 'email' => 'conan3@5labs.com.br',
                 'password' => Hash::make('123456'),
+                'is_admin' => false,
             ],
             [
                 'name' => 'conan4',
                 'email' => 'conan4@5labs.com.br',
                 'password' => Hash::make('123456'),
+                'is_admin' => true,
             ],
             [
                 'name' => 'conan5',
                 'email' => 'conan5@5labs.com.br',
                 'password' => Hash::make('123456'),
+                'is_admin' => false,
             ],
         ];
                 
