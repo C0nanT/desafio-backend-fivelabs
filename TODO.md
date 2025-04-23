@@ -1,5 +1,35 @@
 ### Esse arquivo é apenas para anotações relacionadas ao desenvolvimento.
 
-- [ ] Na rota de Autenticação, corrigir erros de envios 2x.
-- [ ] Separar rotas de Auth que precisam de autenticação.
-- [x] Corrigir acesso não autenticado.
+- [x] Autenticação
+- [x] Gerenciamento de Tarefas
+    - [x] CRUD completo de tarefas (criar, listar, editar, excluir).
+    - [x] Cada tarefa deve ter: título, descrição, status (pendente, em andamento, concluído),
+        prioridade (baixa, média, alta), data de vencimento e usuário responsável.
+    - [x] Apenas o usuário responsável pela tarefa ou um admin pode editar/excluir a tarefa.
+    - [ ] Atribuição de tags as tarefas
+        - [ ] O sistema permitirá que o usuário atribua tags com valores personalizados as tarefas
+        - [ ] Tags poderão ser reaproveitadas para atribuição a mais de uma tarefa
+        - [ ] Apenas usuários com permissão para editar a tarefa poderão adicionar/remover tags
+        - [ ] Uma tarefa poderá estar vinculada a múltiplas tags, e uma tag poderá estar
+            vinculada a múltiplas tarefas
+
+- [ ] Atribuição de Tarefas
+    - [ ] Um usuário pode atribuir uma tarefa a outro.
+    - [ ] Ao atribuir uma tarefa, o sistema deve:
+        - [ ] Enviar um e-mail notificando o usuário responsável.
+        - [ ] Utilizar uma fila de jobs para envio assíncrono.
+
+- [ ] Notificações de Vencimento
+    - [ ] Se uma tarefa estiver com vencimento em 2 dias, o sistema deve:
+        - [ ] Enviar uma notificação por e-mail ao usuário responsável.
+        - [ ] Essa verificação deve rodar via comando agendado (schedule) + job em
+            background.
+
+- [ ] Filtros e Ordenação
+    - [ ] A API deve permitir listar tarefas com filtros:
+        - [ ] Por status, prioridade, data de vencimento, usuário e tags.
+    - [ ] Permitir ordenação por prioridade e data de vencimento.
+
+- [ ] Testes automatizados básicos.
+- [x] Docker para facilitar setup local.
+- [x] Utilização de Redis como serviço de fila.

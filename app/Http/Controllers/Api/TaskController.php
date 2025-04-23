@@ -135,7 +135,7 @@ class TaskController extends Controller
         if (auth()->user()->is_admin) {
             $task = Task::find($id);
         } else {
-            $task = Task::where('created_by', auth()->id())->find($id);
+            $task = Task::where('responsible', auth()->id())->find($id);
         }
 
         if (!$task) {
@@ -162,7 +162,7 @@ class TaskController extends Controller
     {
         $task = Task::find($id);
 
-        if (!auth()->user()->is_admin && $task->created_by != auth()->id()) {
+        if (!auth()->user()->is_admin && $task->responsible != auth()->id()) {
             return response()->json([
                 'message' => 'Unauthorized'
             ], 403);
