@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Models\Tags;
 use App\Models\Tasks;
 use App\Models\User;
 use App\Notifications\TaskAssigned;
@@ -27,9 +28,20 @@ class TaskController extends Controller
      */
     public function index()
     {
-
         if (auth()->user()->is_admin) {
             $tasks = Tasks::all();
+
+            if ($tasks->isEmpty()) {
+                return response()->json([
+                    'message' => 'No tasks found'
+                ], 404);
+            }
+
+            $tasks->each(function ($task) {
+                $taskTags = $this->getTaskTags($task->id);
+                $task->tags = $taskTags;
+            });
+
             return response()->json([
                 'data' => $tasks
             ]);
@@ -39,6 +51,17 @@ class TaskController extends Controller
             ->orWhere('responsible', auth()->id())
             ->get();
 
+        if ($tasks->isEmpty()) {
+            return response()->json([
+                'message' => 'No tasks found'
+            ], 404);
+        }
+
+        $tasks->each(function ($task) {
+            $taskTags = $this->getTaskTags($task->id);
+            $task->tags = $taskTags;
+        });
+      
         return response()->json([
             'data' => $tasks
         ]);
@@ -108,6 +131,9 @@ class TaskController extends Controller
                 'message' => 'Tasks not found'
             ], 404);
         }
+
+        $taskTags = $this->getTaskTags($task->id);
+        $task->tags = $taskTags;
 
         return response()->json([
             'data' => $task
@@ -179,5 +205,17 @@ class TaskController extends Controller
         return response()->json([
             'message' => 'Tasks deleted successfully'
         ]);
+    }
+
+    protected function getTaskTags($taskId)
+    {
+        $tags = Tags::join('tags_tasks', 'tags.id', '=', 'tags_tasks.tag_id')
+            ->where('tags_tasks.task_id', $taskId)
+            ->select('tags.*')
+            ->get();
+
+        return $tags->map(function ($tag) {
+            return $tag;
+        });
     }
 }
