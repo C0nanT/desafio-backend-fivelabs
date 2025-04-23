@@ -14,12 +14,7 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        // \App\Models\User::factory(10)->create();
 
-        User::create([
-            'name' => 'conan',
-            'email' => 'conan@5labs.com.br',
-            'password' => Hash::make('123456'),
-        ]);
+        $this->call(UserSeeder::class);
     }
 }
