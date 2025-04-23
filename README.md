@@ -41,7 +41,13 @@ docker-compose exec app php artisan key:generate
 docker-compose exec app php artisan migrate
 ```
 
-### 6. Executar seeders para dados iniciais
+### 6. Gerar chave JWT
+
+```bash
+docker-compose exec app php artisan jwt:secret
+```
+
+### 7. Executar seeders para dados iniciais
 
 ```bash
 docker-compose exec app php artisan db:seed
