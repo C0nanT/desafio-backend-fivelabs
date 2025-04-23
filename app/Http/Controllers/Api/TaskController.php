@@ -28,16 +28,16 @@ class TaskController extends Controller
     public function index()
     {
 
-        if(auth()->user()->is_admin) {
+        if (auth()->user()->is_admin) {
             $tasks = Task::all();
             return response()->json([
                 'data' => $tasks
             ]);
         }
-        
+
         $tasks = Task::where('created_by', auth()->id())
-                ->orWhere('responsible', auth()->id())
-                ->get();
+            ->orWhere('responsible', auth()->id())
+            ->get();
 
         return response()->json([
             'data' => $tasks
@@ -52,15 +52,14 @@ class TaskController extends Controller
      */
     public function store(Request $request)
     {
-        try{
-
+        try {
             $request->validate([
                 'title' => 'required|string|max:255',
                 'description' => 'nullable|string',
                 'status' => 'nullable|string|in:pending,in_progress,completed',
                 'due_date' => 'nullable|date',
                 'priority' => 'nullable|string|in:low,medium,high',
-                'responsible' => 'nullable|exists:users,id',            
+                'responsible' => 'nullable|exists:users,id',
             ]);
         } catch (\Exception $e) {
             return response()->json([
@@ -69,15 +68,15 @@ class TaskController extends Controller
             ], 422);
         }
 
-            $task = Task::create([
-                'title' => $request->title,
-                'description' => $request->description,
-                'status' => $request->status ?? 'pending',
-                'due_date' => $request->due_date,
-                'priority' => $request->priority ?? 'medium',
-                'responsible' => $request->responsible,
-                'created_by' => auth()->id()
-            ]); 
+        $task = Task::create([
+            'title' => $request->title,
+            'description' => $request->description,
+            'status' => $request->status ?? 'pending',
+            'due_date' => $request->due_date,
+            'priority' => $request->priority ?? 'medium',
+            'responsible' => $request->responsible,
+            'created_by' => auth()->id()
+        ]);
 
         if ($task->responsible) {
             $responsibleUser = User::find($task->responsible);
@@ -103,7 +102,7 @@ class TaskController extends Controller
 
         $task = Task::where('created_by', auth()->id())->find($id)
             ?? Task::where('responsible', auth()->id())->find($id);
-        
+
         if (!$task) {
             return response()->json([
                 'message' => 'Task not found'
@@ -130,15 +129,15 @@ class TaskController extends Controller
             'status' => 'nullable|string|in:pending,in_progress,completed',
             'due_date' => 'nullable|date',
             'priority' => 'nullable|string|in:low,medium,high',
-            'responsible' => 'nullable|exists:users,id',            
+            'responsible' => 'nullable|exists:users,id',
         ]);
 
-        if(auth()->user()->is_admin) {
+        if (auth()->user()->is_admin) {
             $task = Task::find($id);
         } else {
             $task = Task::where('created_by', auth()->id())->find($id);
         }
-        
+
         if (!$task) {
             return response()->json([
                 'message' => 'Task not found'
@@ -163,12 +162,12 @@ class TaskController extends Controller
     {
         $task = Task::find($id);
 
-        if(!auth()->user()->is_admin && $task->created_by != auth()->id()) {
+        if (!auth()->user()->is_admin && $task->created_by != auth()->id()) {
             return response()->json([
                 'message' => 'Unauthorized'
             ], 403);
         };
-        
+
         if (!$task) {
             return response()->json([
                 'message' => 'Task not found'
