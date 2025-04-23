@@ -20,7 +20,7 @@ services:
     container_name: laravel-queue-worker
     restart: unless-stopped
     working_dir: /var/www/
-    command: php artisan queue:work
+    command: php artisan queue:work redis --tries=3 --timeout=90
     volumes:
       - ./:/var/www
     networks:
