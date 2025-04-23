@@ -87,7 +87,8 @@ class TaskController extends Controller
     public function show($id)
     {
 
-        $task = Task::where('created_by', auth()->id())->find($id);
+        $task = Task::where('created_by', auth()->id())->find($id)
+            ?? Task::where('responsible', auth()->id())->find($id);
         
         if (!$task) {
             return response()->json([
@@ -98,6 +99,47 @@ class TaskController extends Controller
 
         return response()->json([
             'status' => 'success',
+            'data' => $task
+        ]);
+    }
+
+    /**
+     * Update the specified task in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  int  $id
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function update(Request $request, $id)
+    {
+        $request->validate([
+            'title' => 'nullable|string|max:255',
+            'description' => 'nullable|string',
+            'status' => 'nullable|string|in:pending,in_progress,completed',
+            'due_date' => 'nullable|date',
+            'priority' => 'nullable|string|in:low,medium,high',
+            'responsible' => 'nullable|exists:users,id',            
+        ]);
+
+        if(auth()->user()->is_admin) {
+            $task = Task::find($id);
+        } else {
+            $task = Task::where('created_by', auth()->id())->find($id)
+                ?? Task::where('responsible', auth()->id())->find($id);
+        }
+        
+        if (!$task) {
+            return response()->json([
+                'status' => 'error',
+                'message' => 'Task not found'
+            ], 404);
+        }
+
+        $task->update($request->all());
+
+        return response()->json([
+            'status' => 'success',
+            'message' => 'Task updated successfully',
             'data' => $task
         ]);
     }
