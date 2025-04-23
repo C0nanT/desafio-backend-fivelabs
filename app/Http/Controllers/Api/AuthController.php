@@ -24,13 +24,12 @@ class AuthController extends Controller
      */
     public function login(Request $request)
     {
-        try{
+        try {
             $request->validate([
                 'email' => 'required|string|email',
                 'password' => 'required|string',
             ]);
-        }
-        catch (\Illuminate\Validation\ValidationException $e) {
+        } catch (\Illuminate\Validation\ValidationException $e) {
             return response()->json([
                 'status' => 'error',
                 'message' => 'Validation failed',
@@ -79,7 +78,7 @@ class AuthController extends Controller
                 'errors' => $e->errors(),
             ], 422);
         }
-        
+
         $user = User::create([
             'name' => $request->name,
             'email' => $request->email,
@@ -124,7 +123,8 @@ class AuthController extends Controller
      *
      * @return \Illuminate\Http\JsonResponse
      */
-    public function refresh(){
+    public function refresh()
+    {
         $token = FacadesJWTAuth::parseToken()->refresh();
         return response()->json([
             'status' => 'success',
