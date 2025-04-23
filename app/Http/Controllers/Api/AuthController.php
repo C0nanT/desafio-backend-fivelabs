@@ -7,6 +7,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use App\Models\User;
+use PHPOpenSourceSaver\JWTAuth\Facades\JWTAuth as FacadesJWTAuth;
+use Tymon\JWTAuth\Facades\JWTAuth;
 
 class AuthController extends Controller
 {
@@ -77,14 +79,14 @@ class AuthController extends Controller
                 'errors' => $e->errors(),
             ], 422);
         }
-
+        
         $user = User::create([
             'name' => $request->name,
             'email' => $request->email,
             'password' => Hash::make($request->password),
         ]);
 
-        $token = Auth::guard('api')->login($user);
+        $token = FacadesJWTAuth::fromUser($user);
         return response()->json([
             'status' => 'success',
             'message' => 'User created successfully',
@@ -122,13 +124,13 @@ class AuthController extends Controller
      *
      * @return \Illuminate\Http\JsonResponse
      */
-    public function refresh()
-    {
+    public function refresh(){
+        $token = FacadesJWTAuth::parseToken()->refresh();
         return response()->json([
             'status' => 'success',
             'user' => Auth::guard('api')->user(),
             'authorization' => [
-                'token' => Auth::guard('api')->refresh(),
+                'token' => $token,
                 'type' => 'bearer',
             ]
         ]);
