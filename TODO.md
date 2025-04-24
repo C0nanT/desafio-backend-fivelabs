@@ -7,14 +7,14 @@
         prioridade (baixa, média, alta), data de vencimento e usuário responsável.
     - [x] Apenas o usuário responsável pela tarefa ou um admin pode editar/excluir a tarefa.
     - [x] Atribuição de tags as tarefas
-        - [ ] O sistema permitirá que o usuário atribua tags com valores personalizados as tarefas
+        - [x] O sistema permitirá que o usuário atribua tags com valores personalizados as tarefas
         - [x] Tags poderão ser reaproveitadas para atribuição a mais de uma tarefa
         - [x] Apenas usuários com permissão para editar a tarefa poderão adicionar/remover tags
         - [x] Uma tarefa poderá estar vinculada a múltiplas tags, e uma tag poderá estar
             vinculada a múltiplas tarefas
 
 - [ ] Atribuição de Tarefas
-    - [ ] Um usuário pode atribuir uma tarefa a outro.
+    - [x] Um usuário pode atribuir uma tarefa a outro.
     - [ ] Ao atribuir uma tarefa, o sistema deve:
         - [ ] Enviar um e-mail notificando o usuário responsável.
         - [ ] Utilizar uma fila de jobs para envio assíncrono.
