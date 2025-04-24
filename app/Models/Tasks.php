@@ -22,4 +22,12 @@ class Tasks extends Model
     protected $casts = [
         'due_date' => 'date'
     ];
+
+    /**
+     * Get the tags associated with the task.
+     */
+    public function tags()
+    {
+        return $this->belongsToMany(Tags::class, 'tags_tasks', 'task_id', 'tag_id');
+    }
 }

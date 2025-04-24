@@ -23,33 +23,59 @@ class TaskController extends Controller
 
     /**
      * Display a listing of the tasks.
-     *
+     * 
+     * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\JsonResponse
      */
-    public function index()
+    public function index(Request $request)
     {
         if (auth()->user()->is_admin) {
-            $tasks = Tasks::all();
-
-            if ($tasks->isEmpty()) {
-                return response()->json([
-                    'message' => 'No tasks found'
-                ], 404);
-            }
-
-            $tasks->each(function ($task) {
-                $taskTags = $this->getTaskTags($task->id);
-                $task->tags = $taskTags;
+            $query = Tasks::query();
+        } else {
+            $query = Tasks::where(function ($q) {
+                $q->where('created_by', auth()->id())
+                    ->orWhere('responsible', auth()->id());
             });
-
-            return response()->json([
-                'data' => $tasks
-            ]);
         }
 
-        $tasks = Tasks::where('created_by', auth()->id())
-            ->orWhere('responsible', auth()->id())
-            ->get();
+        if ($request->has('status') && in_array($request->status, ['pending', 'in_progress', 'completed'])) {
+            $query->where('status', $request->status);
+        }
+
+        if ($request->has('priority') && in_array($request->priority, ['low', 'medium', 'high'])) {
+            $query->where('priority', $request->priority);
+        }
+
+        if ($request->has('due_date')) {
+            $query->whereDate('due_date', $request->due_date);
+        }
+
+        if ($request->has('responsible')) {
+            $query->where('responsible', $request->responsible);
+        }
+
+        if ($request->has('tag_id')) {
+            $query->whereHas('tags', function ($q) use ($request) {
+                $q->where('tags.id', $request->tag_id);
+            });
+        }
+
+        if ($request->has('sort_by')) {
+            $sortBy = $request->sort_by;
+            $sortOrder = $request->sort_order ?? 'asc';
+
+            if ($sortBy == 'due_date' && in_array($sortOrder, ['asc', 'desc'])) {
+                $query->orderBy($sortBy, $sortOrder);
+            } else if ($sortBy == 'priority' && in_array($sortOrder, ['asc', 'desc'])) {
+                $query->orderByRaw("CASE priority WHEN 'low' THEN 1 WHEN 'medium' THEN 2 WHEN 'high' THEN 3 END $sortOrder");
+            } else {
+                return response()->json([
+                    'message' => 'Invalid sort parameters'
+                ], 422);
+            }
+        }
+
+        $tasks = $query->get();
 
         if ($tasks->isEmpty()) {
             return response()->json([
