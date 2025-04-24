@@ -6,8 +6,20 @@ Aplicação Laravel com operações CRUD básicas utilizando Docker, Nginx e Pos
 
 - [Docker](https://www.docker.com/get-started)
 
-## Configuração Inicial
+## Postman
 
+### 1. Importar Coleção 
+
+Para facilitar os testes da API, você pode importar a coleção do Postman:
+
+- [Coleção Postman](https://api.postman.com/collections/38361214-29cb8c66-6d15-4976-a7b5-5ac320120e96?access_key=PMAT-01JSKM8XXRDJ7QG57H13P00E7R)
+
+1. Abra o Postman.
+2. Vá para "Importar".
+3. Selecione o arquivo da coleção.
+
+
+## Configuração Inicial
 
 ### 1. Configurar arquivo de ambiente
 
