@@ -135,7 +135,7 @@ class TaskController extends Controller
         }
 
         return response()->json([
-            'message' => 'Tasks created successfully',
+            'message' => 'Task created successfully',
             'data' => $task
         ], 201);
     }
@@ -206,8 +206,8 @@ class TaskController extends Controller
         $oldResponsible = $task->responsible;
 
         $task->update($request->except('tags'));
-        
-        if($oldResponsible != $request->responsible) {
+
+        if ($oldResponsible != $request->responsible) {
             $responsibleUser = User::find($request->responsible);
             if ($responsibleUser) {
                 $taskModel = Tasks::find($task->id);
