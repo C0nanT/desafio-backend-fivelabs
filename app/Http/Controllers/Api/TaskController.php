@@ -61,7 +61,7 @@ class TaskController extends Controller
             $taskTags = $this->getTaskTags($task->id);
             $task->tags = $taskTags;
         });
-      
+
         return response()->json([
             'data' => $tasks
         ]);
@@ -77,17 +77,17 @@ class TaskController extends Controller
     {
         try {
             $request->validate([
-                'title' => 'required|string|max:255',
+                'title' => 'string|max:255',
                 'description' => 'nullable|string',
-                'status' => 'nullable|string|in:pending,in_progress,completed',
+                'status' => 'string|in:pending,in_progress,completed',
                 'due_date' => 'nullable|date',
-                'priority' => 'nullable|string|in:low,medium,high',
-                'responsible' => 'nullable|exists:users,id',
+                'priority' => 'string|in:low,medium,high',
+                'responsible' => 'exists:users,id',
             ]);
-        } catch (\Exception $e) {
+        } catch (\Illuminate\Validation\ValidationException $e) {
             return response()->json([
                 'message' => 'Validation error',
-                'errors' => $e->getMessage(),
+                'errors' => $e->validator->errors()
             ], 422);
         }
 
@@ -149,15 +149,22 @@ class TaskController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $request->validate([
-            'title' => 'string|max:255',
-            'description' => 'nullable|string',
-            'status' => 'string|in:pending,in_progress,completed',
-            'due_date' => 'nullable|date',
-            'priority' => 'string|in:low,medium,high',
-            'responsible' => 'exists:users,id',
-            'tags' => 'nullable|array',
-        ]);
+        try {
+
+            $request->validate([
+                'title' => 'string|max:255',
+                'description' => 'nullable|string',
+                'status' => 'string|in:pending,in_progress,completed',
+                'due_date' => 'date',
+                'priority' => 'string|in:low,medium,high',
+                'responsible' => 'exists:users,id'
+            ]);
+        } catch (\Illuminate\Validation\ValidationException $e) {
+            return response()->json([
+                'message' => 'Validation error',
+                'errors' => $e->validator->errors()
+            ], 422);
+        }
 
         if (auth()->user()->is_admin) {
             $task = Tasks::find($id);
