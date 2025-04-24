@@ -94,7 +94,7 @@ class TaskController extends Controller
     }
 
     /**
-     * Store a newly created tasks in storage.
+     * Store a newly created task in storage.
      *
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\JsonResponse
@@ -154,7 +154,7 @@ class TaskController extends Controller
 
         if (!$task) {
             return response()->json([
-                'message' => 'Tasks not found'
+                'message' => 'Task not found'
             ], 404);
         }
 
@@ -167,7 +167,7 @@ class TaskController extends Controller
     }
 
     /**
-     * Update the specified tasks in storage.
+     * Update the specified task in storage.
      *
      * @param  \Illuminate\Http\Request  $request
      * @param  int  $id
@@ -199,7 +199,7 @@ class TaskController extends Controller
 
         if (!$task) {
             return response()->json([
-                'message' => 'Tasks not found'
+                'message' => 'Task not found'
             ], 404);
         }
 
@@ -218,13 +218,13 @@ class TaskController extends Controller
         }
 
         return response()->json([
-            'message' => 'Tasks updated successfully',
+            'message' => 'Task updated successfully',
             'data' => $task
         ]);
     }
 
     /**
-     * Remove the specified tasks from storage.
+     * Remove the specified task from storage.
      *
      * @param  int  $id
      * @return \Illuminate\Http\JsonResponse
@@ -241,14 +241,14 @@ class TaskController extends Controller
 
         if (!$task) {
             return response()->json([
-                'message' => 'Tasks not found'
+                'message' => 'Task not found'
             ], 404);
         }
 
         $task->delete();
 
         return response()->json([
-            'message' => 'Tasks deleted successfully'
+            'message' => 'Task deleted successfully'
         ]);
     }
 
