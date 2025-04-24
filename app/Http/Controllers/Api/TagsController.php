@@ -123,7 +123,11 @@ class TagsController extends Controller
             ], 422);
         }
 
-        $tag = Tags::find($id);
+        if(auth()->user()->is_admin) {
+            $tag = Tags::find($id);
+        } else {
+            $tag = Tags::where('created_by', auth()->id())->find($id);
+        }
 
         if (!$tag) {
             return response()->json([

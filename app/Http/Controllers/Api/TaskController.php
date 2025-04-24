@@ -148,10 +148,13 @@ class TaskController extends Controller
      */
     public function show($id)
     {
-
-        $task = Tasks::where('created_by', auth()->id())
-        ->orWhere('responsible', auth()->id())
-        ->find($id);
+        if (auth()->user()->is_admin) {
+            $task = Tasks::find($id);
+        } else {
+            $task = Tasks::where('responsible', auth()->id())
+            ->orWhere('created_by', auth()->id())
+            ->find($id);
+        }
 
         if (!$task) {
             return response()->json([
@@ -234,13 +237,14 @@ class TaskController extends Controller
      */
     public function destroy($id)
     {
-        $task = Tasks::find($id);
-
-        if (!auth()->user()->is_admin && $task->responsible != auth()->id()) {
-            return response()->json([
-                'message' => 'Unauthorized'
-            ], 403);
-        };
+        
+        if (auth()->user()->is_admin) {
+            $task = Tasks::find($id);
+        } else {
+            $task = Tasks::where('responsible', auth()->id())
+            ->orWhere('created_by', auth()->id())
+            ->find($id);
+        }
 
         if (!$task) {
             return response()->json([
