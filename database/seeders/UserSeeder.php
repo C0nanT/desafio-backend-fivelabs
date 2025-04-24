@@ -17,6 +17,8 @@ class UserSeeder extends Seeder
     {
         DB::table('users')->truncate();
 
+        User::factory()->count(100)->create();
+        
         $users = [
             [
                 'name' => 'conan1',

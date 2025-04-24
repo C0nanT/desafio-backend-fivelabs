@@ -16,6 +16,8 @@ class TagsTasksSeeder extends Seeder
     {
         DB::table('tags_tasks')->truncate();
 
+        TagsTasks::factory()->count(100)->create();
+
         $tags_tasks = [
             [
                 'tag_id' => 1,

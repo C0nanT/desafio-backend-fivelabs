@@ -16,6 +16,8 @@ class TagsSeeder extends Seeder
     {
         DB::table('tags')->truncate();
         
+        Tags::factory()->count(100)->create();
+
         $tags = [
             [
                 'name' => 'FiveLabs <3',

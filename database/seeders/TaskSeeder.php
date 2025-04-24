@@ -15,7 +15,9 @@ class TaskSeeder extends Seeder
     public function run(): void
     {
         DB::table('tasks')->truncate();
-
+        
+        Tasks::factory()->count(100)->create();
+        
         $tasks = [
             [
                 'title' => 'Finalizar documentação API',

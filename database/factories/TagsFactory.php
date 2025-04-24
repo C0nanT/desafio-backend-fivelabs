@@ -17,11 +17,11 @@ class TagsFactory extends Factory
     public function definition(): array
     {
         return [
-            'name' => fake()->word(),
-            'slug' => fake()->slug(),
+            'name' => fake()->unique()->word(),
+            'slug' => fake()->unique()->slug(),
             'description' => fake()->sentence(),
             'color' => fake()->hexColor(),
-            'created_by' => fake()->randomNumber(),
+            'created_by' => fake()->numberBetween(1, 10),
         ];
     }
 }
