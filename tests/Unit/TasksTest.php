@@ -4,7 +4,6 @@ namespace Tests\Unit;
 
 use App\Models\Tasks;
 use App\Models\User;
-use App\Models\Tags;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 use Carbon\Carbon;
@@ -65,5 +64,66 @@ class TasksTest extends TestCase
         $this->assertEquals('Descrição atualizada', $task->description);
         $this->assertEquals('completed', $task->status);
         $this->assertEquals('high', $task->priority);
+    }
+
+    /** @test */
+    public function it_can_delete_a_task()
+    {
+        $user = User::factory()->create();
+        $responsibleUser = User::factory()->create();
+
+        $task = Tasks::factory()->create([
+            'created_by' => $user->id,
+            'responsible' => $responsibleUser->id,
+        ]);
+
+        $taskId = $task->id;
+
+        $task->delete();
+
+        $this->assertDatabaseMissing('tasks', ['id' => $taskId]);
+    }
+
+    /** @test */
+    public function it_can_retrieve_a_task()
+    {
+        $user = User::factory()->create();
+        $responsibleUser = User::factory()->create();
+
+        $task = Tasks::factory()->create([
+            'created_by' => $user->id,
+            'responsible' => $responsibleUser->id,
+        ]);
+
+        $retrievedTask = Tasks::find($task->id);
+
+        $this->assertEquals($task->title, $retrievedTask->title);
+        $this->assertEquals($task->description, $retrievedTask->description);
+        $this->assertEquals($task->status, $retrievedTask->status);
+        $this->assertEquals($task->priority, $retrievedTask->priority);
+    }
+
+    /** @test */
+    public function it_can_list_all_tasks()
+    {
+        $user = User::factory()->create();
+        $responsibleUser = User::factory()->create();
+
+        $task1 = Tasks::factory()->create([
+            'created_by' => $user->id,
+            'responsible' => $responsibleUser->id,
+        ]);
+
+        $task2 = Tasks::factory()->create([
+            'created_by' => $user->id,
+            'responsible' => $responsibleUser->id,
+        ]);
+
+        $tasks = Tasks::all();
+
+        $this->assertCount(2, $tasks);
+        $this->assertTrue($tasks->contains($task1));
+        $this->assertTrue($tasks->contains($task2));
+        $this->assertEquals($task1->title, $tasks[0]->title);
     }
 }
