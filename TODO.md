@@ -33,3 +33,6 @@
 - [ ] Testes automatizados básicos.
 - [x] Docker para facilitar setup local.
 - [x] Utilização de Redis como serviço de fila.
+
+- [ ] Adicionar Logs
+- [ ] Diagrama de funcionamento do sistema
