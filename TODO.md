@@ -19,10 +19,10 @@
         - [x] Enviar um e-mail notificando o usuário responsável.
         - [x] Utilizar uma fila de jobs para envio assíncrono.
 
-- [ ] Notificações de Vencimento
-    - [ ] Se uma tarefa estiver com vencimento em 2 dias, o sistema deve:
-        - [ ] Enviar uma notificação por e-mail ao usuário responsável.
-        - [ ] Essa verificação deve rodar via comando agendado (schedule) + job em
+- [x] Notificações de Vencimento
+    - [x] Se uma tarefa estiver com vencimento em 2 dias, o sistema deve:
+        - [x] Enviar uma notificação por e-mail ao usuário responsável.
+        - [x] Essa verificação deve rodar via comando agendado (schedule) + job em
             background.
 
 - [x] Filtros e Ordenação
