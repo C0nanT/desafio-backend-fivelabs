@@ -150,12 +150,13 @@ class TaskController extends Controller
     public function update(Request $request, $id)
     {
         $request->validate([
-            'title' => 'nullable|string|max:255',
+            'title' => 'string|max:255',
             'description' => 'nullable|string',
-            'status' => 'nullable|string|in:pending,in_progress,completed',
+            'status' => 'string|in:pending,in_progress,completed',
             'due_date' => 'nullable|date',
-            'priority' => 'nullable|string|in:low,medium,high',
-            'responsible' => 'nullable|exists:users,id',
+            'priority' => 'string|in:low,medium,high',
+            'responsible' => 'exists:users,id',
+            'tags' => 'nullable|array',
         ]);
 
         if (auth()->user()->is_admin) {
