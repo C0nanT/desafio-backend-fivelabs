@@ -203,7 +203,19 @@ class TaskController extends Controller
             ], 404);
         }
 
-        $task->update($request->all());
+        $oldResponsible = $task->responsible;
+
+        $task->update($request->except('tags'));
+        
+        if($oldResponsible != $request->responsible) {
+            $responsibleUser = User::find($request->responsible);
+            if ($responsibleUser) {
+                $taskModel = Tasks::find($task->id);
+                if ($taskModel) {
+                    $responsibleUser->notify(new TaskAssigned($taskModel));
+                }
+            }
+        }
 
         return response()->json([
             'message' => 'Tasks updated successfully',

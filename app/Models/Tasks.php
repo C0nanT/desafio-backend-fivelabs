@@ -17,6 +17,7 @@ class Tasks extends Model
         'created_by',
         'priority',
         'responsible',
+        'tags',
     ];
     
     protected $casts = [
