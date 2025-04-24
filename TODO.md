@@ -13,11 +13,11 @@
         - [x] Uma tarefa poderá estar vinculada a múltiplas tags, e uma tag poderá estar
             vinculada a múltiplas tarefas
 
-- [ ] Atribuição de Tarefas
+- [x] Atribuição de Tarefas
     - [x] Um usuário pode atribuir uma tarefa a outro.
-    - [ ] Ao atribuir uma tarefa, o sistema deve:
-        - [ ] Enviar um e-mail notificando o usuário responsável.
-        - [ ] Utilizar uma fila de jobs para envio assíncrono.
+    - [x] Ao atribuir uma tarefa, o sistema deve:
+        - [x] Enviar um e-mail notificando o usuário responsável.
+        - [x] Utilizar uma fila de jobs para envio assíncrono.
 
 - [ ] Notificações de Vencimento
     - [ ] Se uma tarefa estiver com vencimento em 2 dias, o sistema deve:
