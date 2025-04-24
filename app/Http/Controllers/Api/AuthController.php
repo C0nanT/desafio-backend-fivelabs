@@ -40,6 +40,7 @@ class AuthController extends Controller
         $credentials = $request->only('email', 'password');
 
         $token = Auth::guard('api')->attempt($credentials);
+        
         if (!$token) {
             return response()->json([
                 'status' => 'error',
@@ -94,7 +95,7 @@ class AuthController extends Controller
                 'token' => $token,
                 'type' => 'bearer',
             ]
-        ]);
+        ], 201);
     }
 
     /**
