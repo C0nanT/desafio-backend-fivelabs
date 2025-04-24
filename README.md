@@ -73,3 +73,14 @@ Para rodar o schedule, execute o seguinte comando:
 ```bash
 docker-compose exec app php artisan schedule:work
 ```
+
+## Rodando testes
+Para rodar os testes, execute o seguinte comando:
+
+```bash
+docker-compose exec app php artisan test
+```
+ou
+```bash
+docker-compose exec app ./vendor/bin/pest
+```
