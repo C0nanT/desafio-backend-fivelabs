@@ -3,6 +3,7 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\AuthController;
+use App\Http\Controllers\Api\TagsController;
 use App\Http\Controllers\Api\TaskController;
 
 
@@ -21,4 +22,13 @@ Route::controller(TaskController::class)->group(function () {
     Route::get('tasks/{id}', 'show');
     Route::put('tasks/{id}', 'update');
     Route::delete('tasks/{id}', 'destroy');
+})->middleware('auth:api');
+
+
+Route::controller(TagsController::class)->group(function () {
+    Route::get('tags', 'index');
+    Route::post('tags', 'store');
+    Route::get('tags/{id}', 'show');
+    Route::put('tags/{id}', 'update');
+    Route::delete('tags/{id}', 'destroy');
 })->middleware('auth:api');

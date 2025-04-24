@@ -6,11 +6,11 @@
     - [x] Cada tarefa deve ter: título, descrição, status (pendente, em andamento, concluído),
         prioridade (baixa, média, alta), data de vencimento e usuário responsável.
     - [x] Apenas o usuário responsável pela tarefa ou um admin pode editar/excluir a tarefa.
-    - [ ] Atribuição de tags as tarefas
+    - [x] Atribuição de tags as tarefas
         - [ ] O sistema permitirá que o usuário atribua tags com valores personalizados as tarefas
-        - [ ] Tags poderão ser reaproveitadas para atribuição a mais de uma tarefa
-        - [ ] Apenas usuários com permissão para editar a tarefa poderão adicionar/remover tags
-        - [ ] Uma tarefa poderá estar vinculada a múltiplas tags, e uma tag poderá estar
+        - [x] Tags poderão ser reaproveitadas para atribuição a mais de uma tarefa
+        - [x] Apenas usuários com permissão para editar a tarefa poderão adicionar/remover tags
+        - [x] Uma tarefa poderá estar vinculada a múltiplas tags, e uma tag poderá estar
             vinculada a múltiplas tarefas
 
 - [ ] Atribuição de Tarefas
