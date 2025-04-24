@@ -25,10 +25,10 @@
         - [ ] Essa verificação deve rodar via comando agendado (schedule) + job em
             background.
 
-- [ ] Filtros e Ordenação
-    - [ ] A API deve permitir listar tarefas com filtros:
-        - [ ] Por status, prioridade, data de vencimento, usuário e tags.
-    - [ ] Permitir ordenação por prioridade e data de vencimento.
+- [x] Filtros e Ordenação
+    - [x] A API deve permitir listar tarefas com filtros:
+        - [x] Por status, prioridade, data de vencimento, usuário e tags.
+    - [x] Permitir ordenação por prioridade e data de vencimento.
 
 - [ ] Testes automatizados básicos.
 - [x] Docker para facilitar setup local.
