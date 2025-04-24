@@ -61,6 +61,12 @@ Após completar a configuração, acesse a aplicação em:
 http://localhost:8000
 ```
 
+Acesse o Mailpit em:
+```
+http://localhost:8025
+```
+
+
 ## Rodando schedule
 Para rodar o schedule, execute o seguinte comando:
 
