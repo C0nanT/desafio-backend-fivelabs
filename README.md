@@ -60,3 +60,10 @@ Após completar a configuração, acesse a aplicação em:
 ```
 http://localhost:8000
 ```
+
+## Rodando schedule
+Para rodar o schedule, execute o seguinte comando:
+
+```bash
+docker-compose exec app php artisan schedule:work
+```
