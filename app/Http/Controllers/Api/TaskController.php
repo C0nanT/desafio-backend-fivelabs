@@ -150,7 +150,6 @@ class TaskController extends Controller
     public function update(Request $request, $id)
     {
         try {
-
             $request->validate([
                 'title' => 'string|max:255',
                 'description' => 'nullable|string',
