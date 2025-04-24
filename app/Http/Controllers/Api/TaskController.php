@@ -149,8 +149,9 @@ class TaskController extends Controller
     public function show($id)
     {
 
-        $task = Tasks::where('created_by', auth()->id())->find($id)
-            ?? Tasks::where('responsible', auth()->id())->find($id);
+        $task = Tasks::where('created_by', auth()->id())
+        ->orWhere('responsible', auth()->id())
+        ->find($id);
 
         if (!$task) {
             return response()->json([
@@ -194,7 +195,9 @@ class TaskController extends Controller
         if (auth()->user()->is_admin) {
             $task = Tasks::find($id);
         } else {
-            $task = Tasks::where('responsible', auth()->id())->find($id);
+            $task = Tasks::where('responsible', auth()->id())
+            ->orWhere('created_by', auth()->id())
+            ->find($id);
         }
 
         if (!$task) {
