@@ -15,7 +15,23 @@ services:
     networks:
       - laravel-network
 
+  schedule-worker:
+    depends_on:
+      - app
+    image: laravel-app
+    container_name: laravel-schedule-worker
+    restart: unless-stopped
+    working_dir: /var/www/
+    command: php artisan schedule:work
+    volumes:
+      - ./:/var/www
+    networks:
+      - laravel-network
+
   queue-worker:
+    depends_on:
+      - app
+      - redis
     image: laravel-app
     container_name: laravel-queue-worker
     restart: unless-stopped
