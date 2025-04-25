@@ -16,15 +16,14 @@ Route::controller(AuthController::class)->group(function () {
     Route::post('refresh', 'refresh');
 });
 
-
 Route::controller(TaskController::class)->group(function () {
     Route::get('tasks', 'index');
     Route::post('tasks', 'store');
     Route::get('tasks/{id}', 'show');
     Route::put('tasks/{id}', 'update');
     Route::delete('tasks/{id}', 'destroy');
-})->middleware('auth:api');
-
+});
+// ->middleware('auth:api');
 
 Route::controller(TagsController::class)->group(function () {
     Route::get('tags', 'index');
@@ -32,9 +31,11 @@ Route::controller(TagsController::class)->group(function () {
     Route::get('tags/{id}', 'show');
     Route::put('tags/{id}', 'update');
     Route::delete('tags/{id}', 'destroy');
-})->middleware('auth:api');
+});
+// ->middleware('auth:api');
 
 Route::controller(TagsTasksController::class)->group(function () {
     Route::put('tags-tasks', 'update');
     Route::delete('tags-tasks', 'destroy');
-})->middleware('auth:api');
+});
+// ->middleware('auth:api');
