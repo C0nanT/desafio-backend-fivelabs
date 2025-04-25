@@ -34,25 +34,21 @@ docker-compose up -d
 docker-compose exec app composer install
 ```
 
-### 3. Gerar chave da aplicação
+### 3. Gerar chaves da aplicação
 
 ```bash
 docker-compose exec app php artisan key:generate
-```
-
-### 4. Gerar chave JWT
-
-```bash
 docker-compose exec app php artisan jwt:secret
+
 ```
 
-### 5. Executar migrações do banco de dados
+### 4. Executar migrações do banco de dados
 
 ```bash
 docker-compose exec app php artisan migrate
 ```
 
-### 6. Executar seeders para dados iniciais
+### 5. Executar seeders para dados iniciais
 
 ```bash
 docker-compose exec app php artisan db:seed
