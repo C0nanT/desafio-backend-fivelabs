@@ -25,30 +25,41 @@ class UserSeeder extends Seeder
                 'email' => 'conan1@5labs.com.br',
                 'password' => Hash::make('123456'),
                 'is_admin' => true,
+                'created_at' => Carbon::now(),
+                'updated_at' => Carbon::now()
             ],
             [
                 'name' => 'conan2',
                 'email' => 'conan2@5labs.com.br',
                 'password' => Hash::make('123456'),
                 'is_admin' => false,
+                'created_at' => Carbon::now(),
+                'updated_at' => Carbon::now(),
+
             ],
             [
                 'name' => 'conan3',
                 'email' => 'conan3@5labs.com.br',
                 'password' => Hash::make('123456'),
                 'is_admin' => false,
+                'created_at' => Carbon::now(),
+                'updated_at' => Carbon::now(),
             ],
             [
                 'name' => 'conan4',
                 'email' => 'conan4@5labs.com.br',
                 'password' => Hash::make('123456'),
                 'is_admin' => true,
+                'created_at' => Carbon::now(),
+                'updated_at' => Carbon::now(),
             ],
             [
                 'name' => 'conan5',
                 'email' => 'conan5@5labs.com.br',
                 'password' => Hash::make('123456'),
                 'is_admin' => false,
+                'created_at' => Carbon::now(),
+                'updated_at' => Carbon::now(),
             ],
         ];
                 
