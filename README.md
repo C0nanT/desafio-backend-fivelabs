@@ -23,28 +23,27 @@ Para facilitar os testes da API, você pode importar a coleção do Postman:
 
 ### 1. Configurar arquivo de ambiente
 
-Copie o arquivo `.env.example` para `.env`:
-
 ```bash
 cp .env.example .env
-```
-
-### 2. Iniciar os containers Docker
-
-```bash
 docker-compose up -d
 ```
 
-### 3. Instalar dependências do Composer
+### 2. Instalar dependências do Composer
 
 ```bash
 docker-compose exec app composer install
 ```
 
-### 4. Gerar chave da aplicação
+### 3. Gerar chave da aplicação
 
 ```bash
 docker-compose exec app php artisan key:generate
+```
+
+### 4. Gerar chave JWT
+
+```bash
+docker-compose exec app php artisan jwt:secret
 ```
 
 ### 5. Executar migrações do banco de dados
@@ -53,13 +52,7 @@ docker-compose exec app php artisan key:generate
 docker-compose exec app php artisan migrate
 ```
 
-### 6. Gerar chave JWT
-
-```bash
-docker-compose exec app php artisan jwt:secret
-```
-
-### 7. Executar seeders para dados iniciais
+### 6. Executar seeders para dados iniciais
 
 ```bash
 docker-compose exec app php artisan db:seed
