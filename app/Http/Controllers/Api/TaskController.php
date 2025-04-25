@@ -151,9 +151,10 @@ class TaskController extends Controller
         if (auth()->user()->is_admin) {
             $task = Tasks::find($id);
         } else {
-            $task = Tasks::where('responsible', auth()->id())
-            ->orWhere('created_by', auth()->id())
-            ->find($id);
+            $task = Tasks::where(function ($q) {
+                $q->where('responsible', auth()->id())
+                    ->orWhere('created_by', auth()->id());
+            })->where('id', $id)->first();
         }
 
         if (!$task) {
@@ -198,9 +199,10 @@ class TaskController extends Controller
         if (auth()->user()->is_admin) {
             $task = Tasks::find($id);
         } else {
-            $task = Tasks::where('responsible', auth()->id())
-            ->orWhere('created_by', auth()->id())
-            ->find($id);
+            $task = Tasks::where(function ($q) {
+                $q->where('responsible', auth()->id())
+                    ->orWhere('created_by', auth()->id());
+            })->where('id', $id)->first();
         }
 
         if (!$task) {
@@ -237,13 +239,13 @@ class TaskController extends Controller
      */
     public function destroy($id)
     {
-        
         if (auth()->user()->is_admin) {
             $task = Tasks::find($id);
         } else {
-            $task = Tasks::where('responsible', auth()->id())
-            ->orWhere('created_by', auth()->id())
-            ->find($id);
+            $task = Tasks::where(function ($q) {
+                $q->where('responsible', auth()->id())
+                    ->orWhere('created_by', auth()->id());
+            })->where('id', $id)->first();
         }
 
         if (!$task) {
