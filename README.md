@@ -25,33 +25,33 @@ Para facilitar os testes da API, você pode importar a coleção do Postman:
 
 ```bash
 cp .env.example .env
-docker-compose up -d
+docker compose up -d
 ```
 
 ### 2. Instalar dependências do Composer
 
 ```bash
-docker-compose exec app composer install
+docker compose exec app composer install
 ```
 
 ### 3. Gerar chaves da aplicação
 
 ```bash
-docker-compose exec app php artisan key:generate
-docker-compose exec app php artisan jwt:secret
+docker compose exec app php artisan key:generate
+docker compose exec app php artisan jwt:secret
 
 ```
 
 ### 4. Executar migrações do banco de dados
 
 ```bash
-docker-compose exec app php artisan migrate
+docker compose exec app php artisan migrate
 ```
 
 ### 5. Executar seeders para dados iniciais
 
 ```bash
-docker-compose exec app php artisan db:seed
+docker compose exec app php artisan db:seed
 ```
 
 ## Acessando a Aplicação
@@ -72,16 +72,16 @@ http://localhost:8025
 Para rodar o schedule, execute o seguinte comando:
 
 ```bash
-docker-compose exec app php artisan schedule:work
+docker compose exec app php artisan schedule:work
 ```
 
 ## Rodando testes
 Para rodar os testes, execute o seguinte comando:
 
 ```bash
-docker-compose exec app php artisan test
+docker compose exec app php artisan test
 ```
 ou
 ```bash
-docker-compose exec app ./vendor/bin/pest
+docker compose exec app ./vendor/bin/pest
 ```
