@@ -1,4 +1,4 @@
-# Laravel CRUD - FiveLabs
+# Laravel CRUD com filas assíncronas e envio de emails
 
 Aplicação Laravel com operações CRUD básicas utilizando Docker, Nginx e PostgreSQL.
 
